@@ -45,15 +45,30 @@ public class PostDao {
         });
     }
 
+    public PostDto getPostByUrl(String type, String url) {
+        String query = "select * from codewr_com.articles where isDeleted =0 and type=? and map_url=?";
+        Object[] params = new Object[]{type, url};
+
+        return jdbcTemplate.queryForObject(query, params, (rs, rowNum) -> {
+            PostDto postDto = new PostDto();
+            postDto.setId(rs.getInt("id"));
+            postDto.setTitle(rs.getString("title"));
+            postDto.setUrl(rs.getString("map_url"));
+            postDto.setType(rs.getString("type"));
+            postDto.setContent(rs.getString("content"));
+            return postDto;
+        });
+    }
+
     public boolean deletePostById(Integer id) {
         try {
 
             String query = "UPDATE codewr_com.articles SET isDeleted = 1  WHERE id = ?";
             jdbcTemplate.update(query, id);
             return true;
-        }catch (Exception exception) {
+        } catch (Exception exception) {
 
-            return  false;
+            return false;
         }
 
     }

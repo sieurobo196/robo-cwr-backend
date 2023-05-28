@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class PostService {
     @Autowired
@@ -18,9 +19,15 @@ public class PostService {
     public List<PostDto> getListPost(String type) {
         return postDao.getListPost(type);
     }
+
     public PostDto getPostById(Integer id) {
         return postDao.getPostById(id);
     }
+
+    public PostDto getPostByUrl(String type, String url) {
+        return postDao.getPostByUrl(type, url);
+    }
+
     public boolean deletePostById(Integer id) {
         return postDao.deletePostById(id);
     }
